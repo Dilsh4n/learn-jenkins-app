@@ -31,10 +31,14 @@ pipeline{
                     echo "testing the file existence"
                     test -f build/index.html
                     echo 'running the test on npm'
-                    npm ci
                     npm  test
                 '''
             }
+        }
+    }
+    post{
+        always{
+            junit 'test-results/junit.xml'
         }
     }
 }
