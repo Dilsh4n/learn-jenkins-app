@@ -46,7 +46,7 @@ pipeline{
                 sh '''
                     npm install serve
                     node_modules/.bin/serve -s build & 
-                    npx playwright test --reporter=HTML
+                    npx playwright test --reporter=html
                 '''
             }
         }
