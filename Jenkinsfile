@@ -20,12 +20,6 @@ pipeline{
             }
         }
         stage('test'){
-            steps{
-                sh '''
-                    echo "testing the file existence"
-                    test -f build/index.html
-                 '''
-            }
             agent{
                 docker{
                     image 'node:18-alpine'
@@ -34,6 +28,8 @@ pipeline{
             }
             steps{
                 sh '''
+                    echo "testing the file existence"
+                    test -f build/index.html
                     echo 'running the test on npm'
                     npm ci
                     npm  test
