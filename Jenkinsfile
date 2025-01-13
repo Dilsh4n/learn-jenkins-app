@@ -1,7 +1,7 @@
 pipeline{
     agent any
     stages{
-        /* stage('build'){
+        stage('build'){
             agent{
                 docker{
                     image 'node:18-alpine'
@@ -18,7 +18,7 @@ pipeline{
                     npm run build
                 '''
             }
-        } */
+        }
         stage('run tests'){
             parallel{
                 stage('test'){
@@ -36,6 +36,11 @@ pipeline{
                             npm  test
                         '''
                     }
+                    post{
+                        always{
+                            junit 'jest-results/junit.xml'
+                        }
+                    }
                 }
                 stage('E2E'){
                     agent{
@@ -51,15 +56,14 @@ pipeline{
                             npx playwright test --reporter=html
                         '''
                     }
+                    post{
+                        always{
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                        }
+                    }
                 }
             }
         }
-        
     }
-    post{
-        always{
-            junit 'jest-results/junit.xml'
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-        }
-    }
+    
 }
