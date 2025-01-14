@@ -1,6 +1,6 @@
 pipeline{
     agent any
-    sages{
+    stages{
         stage('build'){
             agent{
                 docker{
