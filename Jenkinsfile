@@ -40,13 +40,13 @@ pipeline{
                     image 'mcr.microsoft.com/playwright:v1.49.1-noble'
                     reuseNode true
                 }
-                steps{
-                    sh '''
-                        npm install serve
-                        node_modules/.bin/serve -s build &
-                        npx playwright test --reporter=html
-                    '''
-                }
+            }
+            steps{
+                sh '''
+                    npm install serve
+                    node_modules/.bin/serve -s build &
+                    npx playwright test --reporter=html
+                '''
             }
         }
         post{
